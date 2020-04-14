@@ -1,0 +1,25 @@
+{
+  "name": "travelling-saleman-shortest-route",
+  "version": "1.0.0",
+  "description": "computes shortest route between multiple locations/destinations on a map, saves time and money",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chinyavadav/travelling-saleman.git"
+  },
+  "keywords": [
+    "map",
+    "possible routes",
+    "shortest",
+    "distance"
+  ],
+  "author": "Victor Chinyavada",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/chinyavadav/travelling-saleman/issues"
+  },
+  "homepage": "https://github.com/chinyavadav/travelling-saleman#readme"
+}
