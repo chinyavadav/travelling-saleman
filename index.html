@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <title>Travelling Salesman/title>
+        <style>
+            /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+            #map {
+                height: 100%;
+            }
+
+            /* Optional: Makes the sample page fill the window. */
+            html,
+            body {
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+
+            #floating-panel {
+                position: absolute;
+                bottom: 50%;
+                left: 0%;
+                z-index: 5;
+                background-color: #fff;
+                padding: 5px;
+                border: 1px solid #999;
+                text-align: center;
+                font-family: 'Roboto', 'sans-serif';
+                line-height: 30px;
+                padding-left: 10px;
+            }
+        </style>
+</head>
+
+<body>
+    <div id="floating-panel">
+        <table>
+            <tr>
+                <td><b>Fuel Efficiency (km/L): </b></td>
+                <td><input type="number" id="efficiency" placeholder="Fuel Efficiency" value='25' /></td>
+            </tr>
+            <tr>
+                <td><b>Distance (km): </b></td>
+                <td><input disabled id="distance" /></td>
+            </tr>
+            <tr>
+                <td><b>Minimum Fuel Allocation (L)): </b></td>
+                <td><input disabled id="fuel" /></td>
+            </tr>
+        </table>
+    </div>
+    <div id="map"></div>
+    <script>
+        var waypts = [];
+        var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        var labelIndex = 0;
+
+        function initMap() {
+            var directionsDisplay = new google.maps.DirectionsRenderer({
+                suppressMarkers: true
+            });
+            var directionsService = new google.maps.DirectionsService;
+            var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 14,
+                center: {
+                    lat: -19.514285,
+                    lng: 29.840802
+                }
+            });
+            directionsDisplay.setMap(map);
+
+            var nodes = [];
+
+            addMarkerz(-19.514285, 29.840802, map);
+            var node;
+            for (node in nodes) {
+                addWayPoint(nodes[node]['lat'], nodes[node]['lng']);
+                addMarker(nodes[node], map);
+            }
+            addMarkerz(-19.457172, 29.812297, map);
+
+            calculateAndDisplayRoute(directionsService, directionsDisplay);
+            calculateFuel();
+            document.getElementById('efficiency').addEventListener('change', function () {
+                calculateFuel();
+            });
+        }
+
+        function calculateFuel(distance) {
+            var efficiency = document.getElementById('efficiency').value;
+            var fuel = distance / efficiency;
+            document.getElementById('fuel').value = fuel;
+            document.getElementById('distance').value = distance;
+        }
+
+        function addWayPoint(lat, lng) {
+            waypts.push({
+                location: new google.maps.LatLng(lat, lng),
+                stopover: true
+            });
+        }
+
+        function calculateAndDisplayRoute(directionsService, directionsDisplay) {
+
+            directionsService.route({
+                origin: {
+                    lat: -19.514285,
+                    lng: 29.840802
+                }, // Haight.
+                destination: {
+                    lat: -19.457172,
+                    lng: 29.812297
+                }, // Ocean Beach.
+                provideRouteAlternatives: false,
+                waypoints: waypts,
+                travelMode: 'DRIVING'
+            }, function (response, status) {
+                if (status == 'OK') {
+                    directionsDisplay.setDirections(response);
+                } else {
+                    window.alert('Directions request failed due to ' + status);
+                }
+            });
+        }
+
+        function addMarkerz(lat, lng, map) {
+            var location = new google.maps.LatLng(lat, lng);
+            var marker = new google.maps.Marker({
+                position: location,
+                label: labels[labelIndex++ % labels.length],
+                map: map
+            });
+        }
+
+        function addMarker(node, map) {
+            var location = new google.maps.LatLng(node['lat'], node['lng']);
+            var marker = new google.maps.Marker({
+                position: location,
+                label: labels[labelIndex++ % labels.length],
+                map: map,
+                title: node['regno']
+            });
+
+            var contentString = '<div id="content">' +
+                '<div id="siteNotice">' +
+                '</div>' +
+                '<h1 id="firstHeading" class="firstHeading">' + node['regno'] + ' [' + node['status'] + ']</h1>' +
+                '<div id="bodyContent">' +
+                '<p>Company: <b>' + node['company'] + '</b></p>' +
+                '<p>Address: <b>' + node['address'] + '</b>, Phone No: <b>' + node['company_phoneno'] + '</b></p>' +
+                '<p>Name: <b>' + node['firstname'] + '</b>, <b>' + node['lastname'] + '</b>  Phone: <b>' + node[
+                    'phoneno'] + '</b></p>' +
+                '</div>' +
+                '</div>';
+
+            var infowindow = new google.maps.InfoWindow({
+                content: contentString
+            });
+
+            marker.addListener('click', function () {
+                infowindow.open(map, marker);
+            });
+
+
+        }
+    </script>
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD3Cqt-U1lg2Iw-tGC98eaS1asohQYADSM&callback=initMap">
+    </script>
+</body>
+
+</html>

@@ -21,5 +21,10 @@
   "bugs": {
     "url": "https://github.com/chinyavadav/travelling-saleman/issues"
   },
-  "homepage": "https://github.com/chinyavadav/travelling-saleman#readme"
+  "homepage": "https://github.com/chinyavadav/travelling-saleman#readme",
+  "dependencies": {
+    "@googlemaps/google-maps-services-js": "^2.5.5",
+    "axios": "^0.19.2",
+    "dotenv": "^8.2.0"
+  }
 }
