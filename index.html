@@ -144,32 +144,9 @@
                 map: map,
                 title: node['regno']
             });
-
-            var contentString = '<div id="content">' +
-                '<div id="siteNotice">' +
-                '</div>' +
-                '<h1 id="firstHeading" class="firstHeading">' + node['regno'] + ' [' + node['status'] + ']</h1>' +
-                '<div id="bodyContent">' +
-                '<p>Company: <b>' + node['company'] + '</b></p>' +
-                '<p>Address: <b>' + node['address'] + '</b>, Phone No: <b>' + node['company_phoneno'] + '</b></p>' +
-                '<p>Name: <b>' + node['firstname'] + '</b>, <b>' + node['lastname'] + '</b>  Phone: <b>' + node[
-                    'phoneno'] + '</b></p>' +
-                '</div>' +
-                '</div>';
-
-            var infowindow = new google.maps.InfoWindow({
-                content: contentString
-            });
-
-            marker.addListener('click', function () {
-                infowindow.open(map, marker);
-            });
-
-
         }
     </script>
-    <script async defer
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD3Cqt-U1lg2Iw-tGC98eaS1asohQYADSM&callback=initMap">
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=API_KEY&callback=initMap">
     </script>
 </body>
 
