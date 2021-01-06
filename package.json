@@ -24,7 +24,7 @@
   "homepage": "https://github.com/chinyavadav/travelling-saleman#readme",
   "dependencies": {
     "@googlemaps/google-maps-services-js": "^2.5.5",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "dotenv": "^8.2.0"
   }
 }
